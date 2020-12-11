@@ -59,31 +59,35 @@ def result(board, action):
         raise Exception
 
     # deep copy board
-    board_copy = copy.deepcopy(board)
+    boardCopy = copy.deepcopy(board)
 
     # check which player's move it is
-    curr_player = player(board_copy)
+    currentPlayer = player(boardCopy)
 
     # update board with X or O (based on player)
-    board_copy[action[0]][action[1]] = curr_player
+    boardCopy[action[0]][action[1]] = currentPlayer
 
-    return board_copy
+    return boardCopy
 
 
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    for row in range(3): # vertical win
+    # Check vertical
+    for row in range(3): 
         if board[row][0] == board[row][1] and board[row][1] == board[row][2]:
             return board[row][0]
-    for col in range(3): # horizontal win
+
+    # Check horizontal
+    for col in range(3): 
         if board[0][col] == board[1][col] and board[1][col] == board[2][col]:
             return board[0][col]
 
-    if board[0][0] == board[1][1] and board[1][1] == board[2][2]: #downward diagonal
+    # Check diagonals
+    if board[0][0] == board[1][1] and board[1][1] == board[2][2]:
         return board[0][0]
-    if board[2][0] == board[1][1] and board[1][1] == board[0][2]: #downward diagonal
+    if board[2][0] == board[1][1] and board[1][1] == board[0][2]: 
         return board[2][0]
     
     return None
@@ -115,14 +119,14 @@ def utility(board):
     return 0
 
 
-def max_value(board, alpha, beta):
+def maxValue(board, alpha, beta):
     if terminal(board):
         return (utility(board), (0,0))
     v = -math.inf
     max_action = ()
 
     for action in actions(board):
-        curr_min = min_value(result(board, action), alpha, beta)[0]
+        curr_min = minValue(result(board, action), alpha, beta)[0]
         if curr_min > v:
             max_action = action
         v = max(v, curr_min)
@@ -132,14 +136,14 @@ def max_value(board, alpha, beta):
     return (v, max_action)
 
 
-def min_value(board, alpha, beta):
+def minValue(board, alpha, beta):
     if terminal(board):
         return (utility(board), (0,0))
     v = math.inf
     min_action = ()
 
     for action in actions(board):
-        curr_max = max_value(result(board, action), alpha, beta)[0]
+        curr_max = maxValue(result(board, action), alpha, beta)[0]
         if curr_max < v:
             min_action = action
         v = min(v, curr_max)
@@ -157,8 +161,8 @@ def minimax(board):
         return None
     
     if player(board) == X: # maximizing player
-        max_move = max_value(board, -math.inf, math.inf)[1]
+        max_move = maxValue(board, -math.inf, math.inf)[1]
         return max_move
     else: # minimizing player
-        min_move = min_value(board, -math.inf, math.inf)[1]
+        min_move = minValue(board, -math.inf, math.inf)[1]
         return min_move
