@@ -1,9 +1,13 @@
+"""
+@author: Anish Basu
+"""
+
 import pygame
 import sys
 import time
 import numpy
 
-import tictactoe as ttt
+import tictactoe as ttt     #helper functions
 
 pygame.init()
 size = width, height = 600, 400
@@ -22,6 +26,7 @@ user = None
 board = ttt.initial_state()
 ai_turn = False
 
+# Game Loop
 while True:
 
     for event in pygame.event.get():
@@ -34,7 +39,7 @@ while True:
     if user is None:
 
         # Draw title
-        title = largeFont.render("Play Tic-Tac-Toe", True, white)
+        title = largeFont.render("Unbeatable Tic-Tac-Toe", True, white)
         titleRect = title.get_rect()
         titleRect.center = ((width / 2), 50)
         screen.blit(title, titleRect)
@@ -103,7 +108,7 @@ while True:
         elif user == player:
             title = f"Play as {user}"
         else:
-            title = f"Computer thinking..."
+            title = f"AI doing big think..."
         title = largeFont.render(title, True, white)
         titleRect = title.get_rect()
         titleRect.center = ((width / 2), 30)
