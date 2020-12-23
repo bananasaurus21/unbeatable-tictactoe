@@ -1,5 +1,5 @@
 """
-Tic Tac Toe Player
+Player functions
 """
 
 import math
