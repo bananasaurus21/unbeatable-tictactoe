@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb 23 13:56:29 2020
+@author: Anish
+"""
+def game():
+    
+#Setup screen
+    print("----------Welcome to Tic Tac Toe!----------")
+    print("\n")
+    print("The board is set up like this: "+"\n")
+    print("0|1|2")
+    print("3|4|5")
+    print("6|7|8"+"\n")
+    print("PLAYER 1 is X, PLAYER 2 is O"+"\n")
+    
+#Setting up the board  
+    pairs = ([0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6])        #Pairs represent rows, columns and diagonals to check for win
+    board = ["_", "_", "_", "_", "_", "_", " ", " ", " "]                                                   #Layout for the board
+    
+    print(board[0] + "|" + board[1] + "|" + board[2])                                                       #Index for the board
+    print(board[3] + "|" + board[4] + "|" + board[5])
+    print(board[6] + "|" + board[7] + "|" + board[8])
+    
+    turn = 'X'                                            
+    count = 0                                             
+    flag = 0                                                                                                #Flag to check for outcome of the game
+    yesList = ["Yes","Y","y","YES","yes"]                  
+    
+    while count < 8 or count == 8:
+    
+#Determines who's turn it is
+        if turn == 'X':
+            player = 'Player 1'
+        else:
+            player = 'Player 2'
+            
+#Prompts player to make a move     
+        move = int(input("Enter your move " + player + " (any number between 0 and 8): "))
+        
+#Updates the board
+        if move in [6,7,8]:
+            if board[move]==" ":
+                board[move] = turn
+            else:
+                print("That move has been played. Try again")
+                     
+        elif move in [0,1,2,3,4,5]:
+            if board[move]=="_":
+                board[move] = turn           
+            else:
+                print("That move has been played. Try again")
+                
+#Prints the updated board
+        print(board[0] + "|" + board[1] + "|" + board[2])
+        print(board[3] + "|" + board[4] + "|" + board[5])
+        print(board[6] + "|" + board[7] + "|" + board[8])
+                
+        count += 1
+        
+#Changes the turn
+        if turn == 'X':
+            turn = 'O'            
+        else:
+            turn = 'X'
+                   
+#Checks for win
+        for j in pairs:
+            zero = board[j[0]]
+            one = board[j[1]]
+            two = board[j[2]]
+            if zero == one and one == two:
+                if zero == "X":
+                    print("Player 1 wins!")
+                    flag = 1
+               
+                if zero == "O":
+                    print("Player 2 wins!")
+                    flag = 1
+                    
+#Checks for tie or ends the game
+        if count == 9 and flag == 0:
+            flag = 2            
+        elif flag == 2:
+            print("Its a tie!")
+            break
+        elif flag == 1:
+            print("GAME OVER")
+            restart = input("Do you want to play again? (y/n)")
+            if restart in yesList:
+                game()
+            else:
+                exit()
+                
+game()
